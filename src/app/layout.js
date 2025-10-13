@@ -1,8 +1,9 @@
 // src/app/layout.js
-// import "./globals.css";
+import "./globals.css";
 
 import { Geist, Geist_Mono } from "next/font/google";
 import { PokemonProvider } from "./context/PokemonContext.jsx";
+import Navbar from "./components/Navbar/Navbar.js";
 
 // Server-side font setup
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <Navbar />
         <PokemonProvider>{children}</PokemonProvider>
       </body>
     </html>
