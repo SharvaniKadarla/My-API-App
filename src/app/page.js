@@ -54,31 +54,37 @@ export default function Home() {
     //   </section>
     // </main>
 
-    <main className="homepage__main">
-      {["electric", "fire", "grass", "water"].map((c) => (
-        <Card key={c} name={c} />
-      ))}
-    </main>
+    <div className="homepage__main-wrapper">
+      <main className="homepage__main">
+        {["electric", "fire", "grass", "water"].map((c) => (
+          <Card key={c} name={c} />
+        ))}
+      </main>
+    </div>
   );
 }
 
 function Card({ name }) {
   return (
     <article className="homepage__card">
-      <div className="homepage__card__img-container">
-        <img
-          src={`${name}.png`}
-          alt={`${name} icon`}
-          className="homepage__card__img"
-        />
+      <div className="homepage__card--left">
+        <div className="homepage__card__img-container">
+          <img
+            src={`${name}.png`}
+            alt={`${name} icon`}
+            className="homepage__card__img"
+          />
+        </div>
       </div>
-      <h2 className="homepage__card__title">{name}</h2>
-      <p className="homepage__card__description">
-        Explore all the {name} types.
-      </p>
-      <Link className="homepage__card__link" href={`/${name}`}>
-        {"Let's Go!"}
-      </Link>
+      <div className="homepage__card--right">
+        <h2 className="homepage__card__title">{name}</h2>
+        <p className="homepage__card__description">
+          Explore all the {name} types.
+        </p>
+        <Link className="homepage__card__link" href={`/${name}`}>
+          {"Let's Go!"}
+        </Link>
+      </div>
     </article>
   );
 }
