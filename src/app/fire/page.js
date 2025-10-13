@@ -4,7 +4,11 @@ import { PokemonContext } from "../context/PokemonContext.jsx";
 import "./fire.css";
 
 export default function FirePage() {
-  const { pokemonsByType, loadPokemons, loading: listLoading } = useContext(PokemonContext);
+  const {
+    pokemonsByType,
+    loadPokemons,
+    loading: listLoading,
+  } = useContext(PokemonContext);
   const [fireEvolutions, setFireEvolutions] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -21,7 +25,9 @@ export default function FirePage() {
     setLoading(true);
 
     try {
-      const randomIndex = Math.floor(Math.random() * pokemonsByType.fire.length);
+      const randomIndex = Math.floor(
+        Math.random() * pokemonsByType.fire.length
+      );
       const selected = pokemonsByType.fire[randomIndex];
 
       const speciesRes = await fetch(
@@ -32,7 +38,10 @@ export default function FirePage() {
       const evoRes = await fetch(speciesData.evolution_chain.url);
       const evoData = await evoRes.json();
 
-      const extractNames = (node) => [node.species.name, ...node.evolves_to.flatMap(extractNames)];
+      const extractNames = (node) => [
+        node.species.name,
+        ...node.evolves_to.flatMap(extractNames),
+      ];
       const evoNames = extractNames(evoData.chain);
 
       const evoDetails = await Promise.all(
@@ -43,7 +52,10 @@ export default function FirePage() {
             name,
             img: data.sprites.front_default,
             abilities: data.abilities.map((a) => a.ability.name),
-            stats: data.stats.map((s) => ({ name: s.stat.name, value: s.base_stat })),
+            stats: data.stats.map((s) => ({
+              name: s.stat.name,
+              value: s.base_stat,
+            })),
           };
         })
       );
@@ -58,7 +70,7 @@ export default function FirePage() {
 
   return (
     <main className="fire-page">
-      <h1>🔥 Fire Pokémon Evolution</h1>
+      <h1 className="fire__h1">🔥 Fire Pokémon Evolution</h1>
       <button className="pokeball-btn" onClick={fetchFireEvolution}>
         Show Evolution
       </button>
