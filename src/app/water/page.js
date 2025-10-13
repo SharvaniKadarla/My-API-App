@@ -1,38 +1,40 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { PokemonContext } from "../context/PokemonContext.jsx";
 
 export default function Water() {
+  const { pokemonsByType, loadPokemons, loading } = useContext(PokemonContext);
   const [pokemon, setPokemon] = useState(null);
-  const [loading, setLoading] = useState(false);
+
+  // Load Pokémon data from context when page loads
+  useEffect(() => {
+    loadPokemons();
+  }, []);
 
   async function fetchRandomWaterPokemon() {
-    setLoading(true);
-    try {
-      const res = await fetch("https://pokeapi.co/api/v2/type/water");
-      const data = await res.json();
-
-      const randomIndex = Math.floor(Math.random() * data.pokemon.length);
-      const selected = data.pokemon[randomIndex].pokemon;
-
-      const detailsRes = await fetch(selected.url);
-      const details = await detailsRes.json();
-
-      const info = {
-        name: details.name,
-        sprite: details.sprites.front_default,
-        abilities: details.abilities.map((a) => a.ability.name),
-        stats: details.stats.map((s) => ({
-          name: s.stat.name,
-          base: s.base_stat,
-        })),
-      };
-
-      setPokemon(info);
-    } catch (err) {
-      console.error("Error fetching Pokémon:", err);
-    } finally {
-      setLoading(false);
+    const waterList = pokemonsByType.water;
+    if (!waterList || waterList.length === 0) {
+      console.warn("Water Pokémon not loaded yet");
+      return;
     }
+
+    const randomIndex = Math.floor(Math.random() * waterList.length);
+    const selected = waterList[randomIndex];
+
+    const detailsRes = await fetch(selected.url);
+    const details = await detailsRes.json();
+
+    const info = {
+      name: details.name,
+      sprite: details.sprites.front_default,
+      abilities: details.abilities.map((a) => a.ability.name),
+      stats: details.stats.map((s) => ({
+        name: s.stat.name,
+        base: s.base_stat,
+      })),
+    };
+
+    setPokemon(info);
   }
 
   return (
