@@ -61,6 +61,7 @@ export default function FirePage() {
       );
 
       setFireEvolutions(evoDetails);
+      
     } catch (err) {
       console.error("Error fetching Fire evolution:", err);
     } finally {
@@ -69,6 +70,7 @@ export default function FirePage() {
   }
 
   return (
+    
     <main className="fire-page">
       <div className="fire-bg">
         {Array.from({ length: 40 }).map((_, i) => (
@@ -91,6 +93,21 @@ export default function FirePage() {
         ))}
       </div>
       <h1 className="fire__h1">🔥 Fire Pokémon Evolution</h1>
+      {fireEvolutions.length === 0 && !loading && !listLoading && (
+        <div className="fire-intro">
+          <div className="pokeball-animation">
+            <img src="/pk_ball.png" alt="Pokeball" />
+            <p className="hint-text">
+              Tap the button to reveal the Fire Pokémon Evolution Chain!
+            </p>
+          </div>
+
+          <div className="fire-mascot">
+            <img src="/charmander.gif" alt="Charmander" />
+          </div>
+        </div>
+      )}
+
       <button className="pokeball-btn" onClick={fetchFireEvolution}>
         Show Evolution
       </button>
@@ -127,6 +144,10 @@ export default function FirePage() {
           </div>
         ))}
       </div>
+      <br></br>
+      <footer className="fire-footer">
+        <p>🔥 Crafted by Janvi Patel</p>
+      </footer>
     </main>
   );
 }
