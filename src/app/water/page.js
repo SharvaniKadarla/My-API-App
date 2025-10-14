@@ -5,12 +5,14 @@ import { PokemonContext } from "../context/PokemonContext.jsx";
 export default function Water() {
   const { pokemonsByType, loadPokemons, loading } = useContext(PokemonContext);
   const [pokemon, setPokemon] = useState(null);
+  const [isHovered, setIsHovered] = useState(false); // for bounce effect
 
   // Load Pokémon data from context when page loads
   useEffect(() => {
     loadPokemons();
   }, []);
 
+  // Pick random water Pokémon from context
   async function fetchRandomWaterPokemon() {
     const waterList = pokemonsByType.water;
     if (!waterList || waterList.length === 0) {
@@ -30,7 +32,6 @@ export default function Water() {
         details.sprites.other?.["official-artwork"]?.front_default ||
         details.sprites.other?.home?.front_default ||
         details.sprites.front_default,
-
       abilities: details.abilities.map((a) => a.ability.name),
       stats: details.stats.map((s) => ({
         name: s.stat.name,
@@ -52,6 +53,7 @@ export default function Water() {
         backgroundImage: "url('/water_back.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
         color: "white",
         textAlign: "center",
         textShadow: "1px 1px 2px black",
@@ -81,9 +83,11 @@ export default function Water() {
         />
       </div>
 
-      {/* Pokéball */}
+      {/* Pokéball Button */}
       <div
         onClick={fetchRandomWaterPokemon}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         style={{
           width: "120px",
           height: "120px",
@@ -93,8 +97,10 @@ export default function Water() {
           alignItems: "center",
           cursor: "pointer",
           boxShadow: "0 4px 15px rgba(0,0,0,0.5)",
-          transform: loading ? "scale(0.9)" : "scale(1)",
-          transition: "transform 0.25s ease-in-out",
+          transform: isHovered
+            ? "translateY(-12px) scale(1.05)" // bounce up a bit
+            : "translateY(0) scale(1)",
+          transition: "transform 0.3s ease-in-out",
         }}
       >
         <img
@@ -112,7 +118,7 @@ export default function Water() {
         {loading ? "Loading..." : "Click the Pokéball to see a Pokémon!"}
       </p>
 
-      {/* Pokémon info */}
+      {/* Pokémon Info Boxes */}
       {pokemon && (
         <div
           style={{
@@ -139,9 +145,7 @@ export default function Water() {
               fontSize: "20px",
             }}
           >
-            <h3 style={{ textAlign: "center", marginBottom: "8px" }}>
-              📊 Stats
-            </h3>
+            <h3 style={{ textAlign: "center", marginBottom: "8px" }}>📊 Stats</h3>
             <ul style={{ listStyle: "none", padding: 0, lineHeight: "1.5em" }}>
               {pokemon.stats.map((s) => (
                 <li key={s.name}>
@@ -151,7 +155,7 @@ export default function Water() {
             </ul>
           </div>
 
-          {/* Middle — Image + Name */}
+          {/* Middle — Pokémon Image + Name */}
           <div
             style={{
               flex: "1",
@@ -214,23 +218,24 @@ export default function Water() {
         </div>
       )}
 
+      {/* Footer */}
       <footer
         style={{
           marginTop: "auto",
           width: "100%",
           textAlign: "center",
           padding: "15px 0",
-          backgroundColor: "black", // matches header
+          backgroundColor: "black",
           fontFamily: "'Comic Sans MS', sans-serif",
           fontSize: "22px",
           fontWeight: "bold",
-          color: "#ffcc00", // Pokémon yellow
+          color: "#ffcc00",
           textShadow: `
-      2px 2px 0 #3b4cca,
-      -2px -2px 0 #3b4cca,
-      2px -2px 0 #3b4cca,
-      -2px 2px 0 #3b4cca
-    `,
+            2px 2px 0 #3b4cca,
+            -2px -2px 0 #3b4cca,
+            2px -2px 0 #3b4cca,
+            -2px 2px 0 #3b4cca
+          `,
           letterSpacing: "1px",
           position: "fixed",
           bottom: 0,
