@@ -26,7 +26,11 @@ export default function Water() {
 
     const info = {
       name: details.name,
-      sprite: details.sprites.front_default,
+      sprite:
+        details.sprites.other?.["official-artwork"]?.front_default ||
+        details.sprites.other?.home?.front_default ||
+        details.sprites.front_default,
+
       abilities: details.abilities.map((a) => a.ability.name),
       stats: details.stats.map((s) => ({
         name: s.stat.name,
@@ -135,7 +139,9 @@ export default function Water() {
               fontSize: "20px",
             }}
           >
-            <h3 style={{ textAlign: "center", marginBottom: "8px" }}>📊 Stats</h3>
+            <h3 style={{ textAlign: "center", marginBottom: "8px" }}>
+              📊 Stats
+            </h3>
             <ul style={{ listStyle: "none", padding: 0, lineHeight: "1.5em" }}>
               {pokemon.stats.map((s) => (
                 <li key={s.name}>
@@ -207,6 +213,33 @@ export default function Water() {
           </div>
         </div>
       )}
+
+      <footer
+        style={{
+          marginTop: "auto",
+          width: "100%",
+          textAlign: "center",
+          padding: "15px 0",
+          backgroundColor: "black", // matches header
+          fontFamily: "'Comic Sans MS', sans-serif",
+          fontSize: "22px",
+          fontWeight: "bold",
+          color: "#ffcc00", // Pokémon yellow
+          textShadow: `
+      2px 2px 0 #3b4cca,
+      -2px -2px 0 #3b4cca,
+      2px -2px 0 #3b4cca,
+      -2px 2px 0 #3b4cca
+    `,
+          letterSpacing: "1px",
+          position: "fixed",
+          bottom: 0,
+          left: 0,
+          zIndex: 10,
+        }}
+      >
+        Created by Negar Kamvij 💧
+      </footer>
     </main>
   );
 }
