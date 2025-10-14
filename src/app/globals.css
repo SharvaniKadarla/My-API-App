@@ -34,14 +34,14 @@ body::after {
   animation: auroraDrift 30s ease-in-out infinite alternate;
 }
 
-/* Layer 1: Fire + Electric vibe */
+/* Layer 1: Fire + Electric */
 body::before {
   background: radial-gradient(circle at 20% 40%, rgba(255, 107, 107, 0.4) 0%, transparent 60%),
               radial-gradient(circle at 80% 50%, rgba(253, 216, 53, 0.35) 0%, transparent 60%);
   animation-delay: 0s;
 }
 
-/* Layer 2: Water + Grass vibe */
+/* Layer 2: Water + Grass */
 body::after {
   background: radial-gradient(circle at 25% 60%, rgba(77, 171, 245, 0.35) 0%, transparent 70%),
               radial-gradient(circle at 70% 30%, rgba(129, 199, 132, 0.3) 0%, transparent 70%);

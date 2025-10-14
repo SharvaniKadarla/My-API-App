@@ -70,6 +70,26 @@ export default function FirePage() {
 
   return (
     <main className="fire-page">
+      <div className="fire-bg">
+        {Array.from({ length: 40 }).map((_, i) => (
+          <div key={`spark-${i}`} className="spark" style={{
+            left: `${Math.random() * 100}%`,
+            top: `${70 + Math.random() * 30}%`,
+            animationDelay: `${Math.random() * 4}s`,
+            width: `${2 + Math.random() * 2}px`,
+            height: `${2 + Math.random() * 2}px`,
+          }}></div>
+        ))}
+        {Array.from({ length: 10 }).map((_, i) => (
+          <div key={`smoke-${i}`} className="smoke" style={{
+            left: `${Math.random() * 100}%`,
+            top: `${70 + Math.random() * 20}%`,
+            animationDelay: `${Math.random() * 6}s`,
+            width: `${10 + Math.random() * 10}px`,
+            height: `${10 + Math.random() * 10}px`,
+          }}></div>
+        ))}
+      </div>
       <h1 className="fire__h1">🔥 Fire Pokémon Evolution</h1>
       <button className="pokeball-btn" onClick={fetchFireEvolution}>
         Show Evolution
