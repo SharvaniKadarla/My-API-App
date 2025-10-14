@@ -3,6 +3,7 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import "./grass.css";
 import { PokemonContext } from "../context/PokemonContext.jsx";
+import SearchIcon from "@mui/icons-material/Search";
 
 export default function Grass() {
   const {
@@ -97,13 +98,20 @@ export default function Grass() {
 
   return (
     <>
+      <div></div>
       <div className="grass__wrapper">
         <div className="grass__input-control">
+          <label className="grass__input-label">
+            <SearchIcon
+              className="grass__search-icon"
+              sx={{ color: "#2b8a3e" }}
+            />
+          </label>
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="🔎 Search for a Grass Pokemon"
+            placeholder="Search for a Grass Pokemon"
             className="grass__input"
           />
         </div>
