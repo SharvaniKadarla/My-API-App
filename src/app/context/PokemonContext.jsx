@@ -1,10 +1,10 @@
+// context/PokemonContext.jsx
 "use client";
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useCallback, useMemo } from "react";
 
 export const PokemonContext = createContext();
 
 export function PokemonProvider({ children }) {
-  // const [pokemonList, setPokemonList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [pokemonsByType, setPokemonsByType] = useState({
     electric: [],
@@ -13,34 +13,19 @@ export function PokemonProvider({ children }) {
     water: [],
   });
 
-  // Helper function to fetch list of a particular type of Pokemon
-  async function fetchTypeList(typeName) {
+  const fetchTypeList = useCallback(async (typeName) => {
     try {
       const res = await fetch(`https://pokeapi.co/api/v2/type/${typeName}/`);
       if (!res.ok) throw new Error(`Failed type ${typeName}: ${res.status}`);
       const data = await res.json();
-      return (data.pokemon || []).map((item) => item.pokemon);
+      return (data.pokemon || []).map((item) => item.pokemon); // { name, url }
     } catch (err) {
       console.error(`Error fetching data: ${err}`);
       return [];
     }
-  }
+  }, []);
 
-  // async function loadPokemon() {
-  //   try {
-  //     setLoading(true);
-  //     const res = await fetch("https://pokeapi.co/api/v2/pokemon");
-  //     const data = await res.json();
-  //     console.log("Fetched data:", data.results);
-  //     setPokemonList(data.results);
-  //   } catch (err) {
-  //     console.error("Error fetching pokemon:", err);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // }
-
-  async function loadPokemons() {
+  const loadPokemons = useCallback(async () => {
     try {
       setLoading(true);
       const [electric, fire, grass, water] = await Promise.all([
@@ -55,15 +40,12 @@ export function PokemonProvider({ children }) {
     } finally {
       setLoading(false);
     }
-  }
+  }, [fetchTypeList]);
 
-  const contextValue = {
-    // pokemonList,
-    // loadPokemon,
-    loadPokemons,
-    pokemonsByType,
-    loading,
-  };
+  const contextValue = useMemo(
+    () => ({ loadPokemons, pokemonsByType, loading }),
+    [loadPokemons, pokemonsByType, loading]
+  );
 
   return (
     <PokemonContext.Provider value={contextValue}>
