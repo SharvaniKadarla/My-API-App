@@ -336,6 +336,12 @@ export default function Electric() {
           </Box>
         </>
       )}
-    </Box>
+      {/* Footer / Credit */}
+      <Box sx={{ mt: 6, mb: 2, textAlign: "center" }}>
+        <Typography variant="body2" sx={{ color: "#616161" }}>
+          ⚡ Page created by Sharvani Kadarla
+        </Typography>
+      </Box>
+    </Box>  // <-- main container closes here
   );
 }
