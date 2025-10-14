@@ -124,3 +124,28 @@
   border-radius: 10px;
   color: #ebfbee;
 }
+
+.grass__footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #212529;
+  padding: 50px;
+  font-size: 12px;
+  letter-spacing: 1.2;
+  color: #ebfbee;
+}
+
+.grass__footer-link:link,
+.grass__footer-link:visited {
+  color: #ebfbee;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.grass__footer-link:hover,
+.grass__footer-link:active {
+  color: #b2f2bb;
+}

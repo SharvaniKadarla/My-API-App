@@ -120,6 +120,19 @@ export default function Grass() {
           ))}
         </main>
       </div>
+
+      <footer className="grass__footer">
+        <p className="grass__footer-text">
+          Created by{" "}
+          <a
+            className="grass__footer-link"
+            rel="noopener noreferrer"
+            href="https://github.com/bhoamikhona"
+          >
+            <strong>Bhoami K Khona</strong>
+          </a>
+        </p>
+      </footer>
     </>
   );
 }
