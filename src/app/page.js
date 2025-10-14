@@ -1,10 +1,11 @@
 "use client";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect,useRef } from "react";
 import { PokemonContext } from "./context/PokemonContext.jsx";
 import Link from "next/link.js";
 
 export default function Home() {
   const { pokemonsByType, loadPokemons } = useContext(PokemonContext);
+  const starsContainerRef = useRef(null);
 
   useEffect(() => {
     loadPokemons();
@@ -17,7 +18,8 @@ export default function Home() {
 
   /*STARS*/
   useEffect(() => {
-  const body = document.body;
+  // const body = document.body;
+  const container = starsContainerRef.current;
   const numStars = 50;
 
   for (let i = 0; i < numStars; i++) {
@@ -34,8 +36,11 @@ export default function Home() {
     star.style.height = `${size}px`;
     star.style.opacity = 0.3 + Math.random() * 0.7;
 
-    body.appendChild(star);
+    container.appendChild(star);
   }
+  return ()=>{
+    container.innerHTML = "";
+  };
 }, []);
 
 
@@ -78,14 +83,16 @@ export default function Home() {
     //   </section>
     // </main>
     
-
+  <div className="home-bg">
     <div className="homepage__main-wrapper">
+      <div ref={starsContainerRef} className="stars-background"></div>
       <main className="homepage__main">
         {["electric", "fire", "grass", "water"].map((c) => (
           <Card key={c} name={c} />
         ))}
       </main>
     </div>
+  </div>
   );
 }
 
