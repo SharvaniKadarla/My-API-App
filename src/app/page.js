@@ -15,6 +15,30 @@ export default function Home() {
     console.log("pokemonsByType updated:", pokemonsByType);
   }, [pokemonsByType]);
 
+  /*STARS*/
+  useEffect(() => {
+  const body = document.body;
+  const numStars = 50;
+
+  for (let i = 0; i < numStars; i++) {
+    const star = document.createElement("div");
+    star.className = "star";
+
+    
+    star.style.top = `${Math.random() * 100}%`;
+    star.style.left = `${Math.random() * 100}%`;
+
+   
+    const size = 2 + Math.random() * 3; 
+    star.style.width = `${size}px`;
+    star.style.height = `${size}px`;
+    star.style.opacity = 0.3 + Math.random() * 0.7;
+
+    body.appendChild(star);
+  }
+}, []);
+
+
   return (
     // <main>
     //   <section>
@@ -53,6 +77,7 @@ export default function Home() {
     //     </ul>
     //   </section>
     // </main>
+    
 
     <div className="homepage__main-wrapper">
       <main className="homepage__main">
