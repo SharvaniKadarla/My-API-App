@@ -1,20 +1,49 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
 .grass__wrapper {
   background-color: #fff;
+}
+
+.grass__input-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.grass__input {
+  border: none;
+  max-width: 1150px;
+  width: 100%;
+  padding: 15px 20px;
+  margin: 50px 0;
+  background-color: #ebfbee;
+  color: #2b8a3e;
+  font-family: "Montserrat", sans-serif;
+  font-size: 15px;
+  border-radius: 10px;
+  border: 1px solid #2b8a3e;
+}
+
+.grass__input::placeholder {
+  color: #2b8a3e;
+}
+
+.grass__input:active,
+.grass__input:hover {
+  outline: 1px solid #d3f9d8;
 }
 
 .grass__main {
   background-color: #fff;
   min-height: 100vh;
-  max-width: 1400px;
+  max-width: 1150px;
   margin: 0 auto;
   color: #000;
 
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(3, minmax(350px, 1fr));
   grid-template-rows: auto;
   gap: 50px;
-
-  padding: 50px 100px;
 }
 
 .grass__card {
@@ -28,6 +57,7 @@
   border-radius: 20px;
   max-width: 350px;
   position: relative;
+  max-height: 410px;
 }
 
 .grass__card--img-container {

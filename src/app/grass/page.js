@@ -15,6 +15,7 @@ export default function Grass() {
   const [details, setDetails] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     loadPokemons();
@@ -30,15 +31,17 @@ export default function Grass() {
     setLoading(true);
     setError(null);
 
+    // IIFE to get details of each pokemon
     (async () => {
       try {
         const results = await Promise.all(
+          // for each grass list item, use its provided detail URL to get details with abort signal
           grassList.map(async ({ url }) => {
             const res = await fetch(url, { signal: ctrl.signal });
             if (!res.ok) throw new Error(`Failed: ${res.status}`);
             const data = await res.json();
 
-            // normalize
+            // extract data
             const id = data.id;
             const name = data.name;
             const img =
@@ -51,6 +54,7 @@ export default function Grass() {
             const heightM = (data.height ?? 0) / 10;
             const weightKg = (data.weight ?? 0) / 10;
 
+            // return extracted datas
             return { id, name, img, abilities, heightM, weightKg };
           })
         );
@@ -66,6 +70,12 @@ export default function Grass() {
 
     return () => ctrl.abort();
   }, [grassList]);
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return details;
+    return details.filter((p) => p.name.toLowerCase().includes(q));
+  }, [details, query]);
 
   if (ctxLoading || loading) {
     return (
@@ -86,20 +96,31 @@ export default function Grass() {
   }
 
   return (
-    <div className="grass__wrapper">
-      <main className="grass__main">
-        {details.map((p) => (
-          <GrassCard
-            key={p.id}
-            name={p.name}
-            img={p.img}
-            abilities={p.abilities}
-            height={`${p.heightM} m`}
-            weight={`${p.weightKg} kg`}
+    <>
+      <div className="grass__wrapper">
+        <div className="grass__input-control">
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="🔎 Search for a Grass Pokemon"
+            className="grass__input"
           />
-        ))}
-      </main>
-    </div>
+        </div>
+        <main className="grass__main">
+          {filtered.map((p) => (
+            <GrassCard
+              key={p.id}
+              name={p.name}
+              img={p.img}
+              abilities={p.abilities}
+              height={`${p.heightM} m`}
+              weight={`${p.weightKg} kg`}
+            />
+          ))}
+        </main>
+      </div>
+    </>
   );
 }
 
