@@ -109,7 +109,7 @@ export default function Electric() {
         variant="h2"
         sx={{
           fontWeight: "bold",
-          color: "#fbc02d",
+          color: "#f3b61bff",
           textShadow: "2px 2px 6px #ff6f00",
           textAlign: "center",
         }}
